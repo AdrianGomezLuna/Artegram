@@ -1,0 +1,7 @@
+{
+  "name": "artegram",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

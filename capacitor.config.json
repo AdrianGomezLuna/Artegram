@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "artegram",
-	"webDir": "www",
-	"bundledWebRuntime": false
+    "appId": "io.ionic.artegram",
+    "appName": "artegram",
+    "webDir": "www",
+    "bundledWebRuntime": false
 }

@@ -16,7 +16,7 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.postService.getPosts().subscribe( resp => {
       console.log( resp );
-      this.posts.push(...resp.posts);
+      this.posts.push(...resp.posts); // cada entrada lo trata como un elemento nuevo
     });
   }
 

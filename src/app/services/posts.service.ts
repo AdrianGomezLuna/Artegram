@@ -16,7 +16,7 @@ export class PostsService {
 
   getPosts() {
     this.paginaPosts++;
-
     return this.http.get<RespuestaPosts>(`${URL}/posts/?pagina=${this.paginaPosts}`);
+    //La URL lo coge de los enviroments
   }
 }

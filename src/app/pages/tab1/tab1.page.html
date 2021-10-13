@@ -12,6 +12,10 @@
 <ion-content color="light">
 
     <!-- refresher -->
+    <ion-refresher [disabled]="!habilitar" slot="fixed" (ionRefresh)="recargar($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
 
     <!-- post -->
     <app-posts [posts]="posts"></app-posts>

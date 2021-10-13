@@ -14,7 +14,10 @@ export class PostsService {
 
   constructor( private http: HttpClient) { }
 
-  getPosts() {
+  getPosts(nuevo: boolean = false) {
+    if (nuevo) {
+      this.paginaPosts = 0;
+    }
     this.paginaPosts++;
     return this.http.get<RespuestaPosts>(`${URL}/posts/?pagina=${this.paginaPosts}`);
     //La URL lo coge de los enviroments

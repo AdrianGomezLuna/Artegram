@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, NavController } from '@ionic/angular';
+import { UsuarioService } from '../../services/usuario.service';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +54,12 @@ export class LoginPage implements OnInit {
     slidesPerView: 3.5
   };
 
-  constructor() { }
+  loginUser = {
+    email: 'adri@gmail.com',
+    password: '123456'
+  };
+
+  constructor( private usuarioService: UsuarioService, private navController: NavController, private uiService: UiServiceService) { }
 
   ngOnInit() {}
 
@@ -62,9 +69,19 @@ export class LoginPage implements OnInit {
   }
 
   //Login de la aplicación
-  login(fLogin: NgForm) {
-    console.log(fLogin.valid);
-
+  async login(fLogin: NgForm) {
+    if (fLogin.invalid) {
+      return;
+    }
+    //Devuelve una promesa, devolverá TRUE o FALSE
+    const valido = await this.usuarioService.login(this.loginUser.email, this.loginUser.password);
+    if (valido) {
+      //colocamos la ruta que aparece en app.routing.ts
+      this.navController.navigateRoot('/main/tabs/tab1',{animated: true});
+    }else{
+      //mostrar alerta de lo ocurrido
+      this.uiService.alertaInformativa('Usuario y/o contraseña no son correctos');
+    }
   }
 
   //Registro de la aplicación

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { IonSlides, NavController } from '@ionic/angular';
 import { UsuarioService } from '../../services/usuario.service';
 import { UiServiceService } from '../../services/ui-service.service';
+import { Usuario } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -13,50 +14,16 @@ export class LoginPage implements OnInit {
 
   @ViewChild('slidePrincipal',{static:false}) slides: IonSlides;
 
-  //Avatares que tenemos para poder elegir
-  avatars = [
-    {
-      img: 'av-1.png',
-      seleccionado: true
-    },
-    {
-      img: 'av-2.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-3.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-4.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-5.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-6.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-7.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-8.png',
-      seleccionado: false
-    },
-  ];
-
-  // Conseguir que los avatares de selección estén más juntos
-  avatarSlide = {
-    slidesPerView: 3.5
-  };
-
   loginUser = {
     email: 'adri@gmail.com',
     password: '123456'
+  };
+
+  registroUser: Usuario = {
+    email: 'test',
+    password: '123456',
+    nombre: 'Test',
+    avatar: 'av-1.png'
   };
 
   constructor( private usuarioService: UsuarioService, private navController: NavController, private uiService: UiServiceService) { }
@@ -76,7 +43,7 @@ export class LoginPage implements OnInit {
     //Devuelve una promesa, devolverá TRUE o FALSE
     const valido = await this.usuarioService.login(this.loginUser.email, this.loginUser.password);
     if (valido) {
-      //colocamos la ruta que aparece en app.routing.ts
+      //colocamos la ruta que aparece en app.routing.ts para navegar al tab
       this.navController.navigateRoot('/main/tabs/tab1',{animated: true});
     }else{
       //mostrar alerta de lo ocurrido
@@ -85,14 +52,19 @@ export class LoginPage implements OnInit {
   }
 
   //Registro de la aplicación
-  registro(fRegistro: NgForm){
-    console.log(fRegistro.valid);
-  }
-
-  //Cambiamos todos los avatares la selección a false y luego el que hemos seleccionado lo ponemos en true
-  seleccionarAvatar(avatar){
-    this.avatars.forEach( av => av.seleccionado = false);
-    avatar.seleccionado = true;
+  async registro(fRegistro: NgForm){
+    if (fRegistro.invalid) {  //Comprueba si el registro es válido
+      return;
+    }
+    //Devuelve una promesa, devolverá TRUE o FALSE
+    const valido = await this.usuarioService.registro(this.registroUser);
+    if (valido) {
+      //colocamos la ruta que aparece en app.routing.ts para navegar al tab
+      this.navController.navigateRoot('/main/tabs/tab1',{animated: true});
+    }else{
+      //mostrar alerta de lo ocurrido
+      this.uiService.alertaInformativa('Este correo electrónico ya existe');
+    }
   }
 
   //Moverse en los diferentes slides

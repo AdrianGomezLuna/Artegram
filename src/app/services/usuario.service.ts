@@ -14,7 +14,7 @@ const URL = environment.url;
 export class UsuarioService {
 
   token = null;
-  usuario: Usuario;
+  private usuario: Usuario;
   private storages: Storage;
 
   constructor(private http: HttpClient, private storage: Storage, private navController: NavController) {
@@ -69,13 +69,22 @@ export class UsuarioService {
     });
   }
 
+  getUsuario() {
+    // eslint-disable-next-line no-underscore-dangle
+    if (!this.usuario._id) {
+      this.validarToken();
+    }
+    // return{...this.usuario};
+    return this.usuario;
+  }
+
   //Promesa, que se espera hasta que se guarde el token en el storage
   async guardarToken( token: string) {
     this.token = token;
     await this.storage.set('token', token);
   }
 
-  //No funciona aún
+  //Cargar el token del usuario guardado
   async cargarToken() {
     this.token = await this.storage.get('token') || null;
     console.log('token:',this.token);
@@ -105,6 +114,27 @@ export class UsuarioService {
           resolve(true);
         } else {
           this.navController.navigateRoot('/login');
+          resolve(false);
+        }
+      });
+    });
+  }
+
+  actualizarUsuario(usuario: Usuario) {
+
+    const headers = new HttpHeaders({
+      'x-token': this.token
+    });
+
+    return new Promise(resolve => {
+        this.http.post(`${URL}/user/update`, usuario, {headers}).subscribe( resp => {
+
+          // eslint-disable-next-line @typescript-eslint/dot-notation
+        if (resp['ok']) {
+          // eslint-disable-next-line @typescript-eslint/dot-notation
+          this.guardarToken(resp['token']);
+          resolve(true);
+        } else {
           resolve(false);
         }
       });

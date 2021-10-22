@@ -18,6 +18,9 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.siguiente();
+    this.postService.nuevoPost.subscribe(post => {
+      this.posts.unshift(post);
+    });
   }
 
   siguiente( event?, nuevo: boolean = false ) {

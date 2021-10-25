@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -22,7 +24,8 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     IonicStorageModule.forRoot()
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Geolocation
   ],
   bootstrap: [AppComponent],
 })

@@ -21,9 +21,9 @@ export class PostComponent implements OnInit {
   constructor() { }
 
   //Mantener los tamaños de las imágenes cuando se cambia la orientación móvil
-  @HostListener('window:resize') onResize(){
-    setTimeout(() => this.slides.update(), 100);
-  }
+  // @HostListener('window:resize') onResize(){
+  //   setTimeout(() => this.slides.update(), 100);
+  // }
 
   ngOnInit() {}
 

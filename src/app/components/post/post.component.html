@@ -9,14 +9,14 @@
         </ion-label>
     </ion-item>
 
-    <ion-slides pager="true">
+    <!-- <ion-slides pager="true">
         <ion-slide class="image-slide" style="background-image: url('{{imag1}}')"></ion-slide>
         <ion-slide class="image-slide" style="background-image: url('{{imag2}}')"></ion-slide>
         <ion-slide class="image-slide" style="background-image: url('{{imag3}}')"></ion-slide>
-    </ion-slides>
+    </ion-slides> -->
 
     <!-- mapa -->
-
+    <app-mapa [coords]="post.coords"></app-mapa>
 
     <ion-item lines="none">
         <ion-icon name="heart-outline" slot="start"></ion-icon>

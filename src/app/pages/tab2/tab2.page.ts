@@ -45,7 +45,8 @@ export class Tab2Page {
     //Está buscando la localización
     this.cargandoGeo = true;
 
-    this.geolocation.getCurrentPosition().then((resp) => {
+    // this.geolocation.getCurrentPosition().then((resp) => { Esta es la buena, la otra es prueba
+    this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((resp) => {
       // resp.coords.latitude
       // resp.coords.longitude
       this.cargandoGeo = false;

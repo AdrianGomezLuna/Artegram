@@ -3,6 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { RespuestaPosts, Post } from '../interfaces/interfaces';
 import { UsuarioService } from './usuario.service';
+import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer/ngx';
 
 const URL = environment.url;
 
@@ -15,7 +16,7 @@ export class PostsService {
 
   nuevoPost = new  EventEmitter<Post>();
 
-  constructor( private http: HttpClient, private usuarioService: UsuarioService) { }
+  constructor( private http: HttpClient, private usuarioService: UsuarioService, private fileTransfer: FileTransfer) { }
 
   getPosts(nuevo: boolean = false) {
     if (nuevo) {
@@ -40,4 +41,23 @@ export class PostsService {
           });
     });
   }
+
+  subirImagen(img: string){
+    const options: FileUploadOptions = {
+      fileKey: 'image',
+      headers: {
+        'x-token': this.usuarioService.token
+      }
+    };
+
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
+
+    fileTransfer.upload(img, `${URL}/posts/upload`, options ).then(data => {
+      console.log(data);
+    }).catch(err => {
+      console.log('Error en cargar', err);
+    });
+  }
+
+
 }

@@ -9,11 +9,15 @@
         </ion-label>
     </ion-item>
 
-    <!-- <ion-slides pager="true">
-        <ion-slide class="image-slide" style="background-image: url('{{imag1}}')"></ion-slide>
-        <ion-slide class="image-slide" style="background-image: url('{{imag2}}')"></ion-slide>
-        <ion-slide class="image-slide" style="background-image: url('{{imag3}}')"></ion-slide>
-    </ion-slides> -->
+    <!-- imagenes -->
+    <!-- Hay más de una imagen -->
+    <ion-slides pager="true" *ngIf="post.img.length > 1">
+        <ion-slide *ngFor="let img of post.img" class="image-slide" style="background-image: url('{{(img | imagens: post.usuario._id)}}')"></ion-slide>
+    </ion-slides>
+    <!-- Solo hay 1 imagen -->
+    <ion-slides *ngIf="post.img.length === 1" [options]="slideSoloOpt">
+        <ion-slide class="image-slide" style="background-image: url('{{(post.img[0] | imagens: post.usuario._id)}}')"></ion-slide>
+    </ion-slides>
 
     <!-- mapa -->
     <app-mapa [coords]="post.coords" *ngIf="post.coords"></app-mapa>

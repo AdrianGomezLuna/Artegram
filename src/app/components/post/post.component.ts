@@ -14,16 +14,17 @@ export class PostComponent implements OnInit {
   //Mantener los tamaños de las imágenes cuando se cambia la orientación móvil
   @ViewChild(IonSlides) slides: IonSlides;
 
-  imag1 = '/assets/perro-1.jpg';
-  imag2 = '/assets/perro-2.jpg';
-  imag3 = '/assets/perro-3.jpg';
+  slideSoloOpt = {
+    allowSlideNext: false,
+    allowSlidePrev: false
+  };
 
   constructor() { }
 
   //Mantener los tamaños de las imágenes cuando se cambia la orientación móvil
-  // @HostListener('window:resize') onResize(){
-  //   setTimeout(() => this.slides.update(), 100);
-  // }
+  @HostListener('window:resize') onResize(){
+    setTimeout(() => this.slides.update(), 100);
+  }
 
   ngOnInit() {}
 
